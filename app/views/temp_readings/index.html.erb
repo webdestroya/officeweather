@@ -1,0 +1,23 @@
+<h1>Listing temp_readings</h1>
+
+<table>
+  <tr>
+    <th>Temperature</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @temp_readings.each do |temp_reading| %>
+  <tr>
+    <td><%= temp_reading.temperature %></td>
+    <td><%= link_to 'Show', temp_reading %></td>
+    <td><%= link_to 'Edit', edit_temp_reading_path(temp_reading) %></td>
+    <td><%= link_to 'Destroy', temp_reading, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Temp reading', new_temp_reading_path %>

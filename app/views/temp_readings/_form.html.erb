@@ -1,0 +1,21 @@
+<%= form_for(@temp_reading) do |f| %>
+  <% if @temp_reading.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@temp_reading.errors.count, "error") %> prohibited this temp_reading from being saved:</h2>
+
+      <ul>
+      <% @temp_reading.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :temperature %><br />
+    <%= f.text_field :temperature %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

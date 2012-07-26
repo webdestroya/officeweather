@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Temperature:</b>
+  <%= @temp_reading.temperature %>
+</p>
+
+
+<%= link_to 'Edit', edit_temp_reading_path(@temp_reading) %> |
+<%= link_to 'Back', temp_readings_path %>
