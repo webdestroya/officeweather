@@ -28,7 +28,6 @@ OfficeGraphs.overall_temperature = (container, data) ->
       tickDecimals: 1
       tickFormatter: OfficeGraphs.default_temp_tick
     HtmlText: true
-    title: "Office Temperature"
     mouse: 
       track: true
       sensibility: 10
@@ -74,7 +73,6 @@ OfficeGraphs.hourly_temperature = (container, data) =>
       max: 24
       noTicks: 24
       tickDecimals: 0
-    title: "Average Temperature by Hour"
     yaxis:
       tickFormatter: OfficeGraphs.default_temp_tick
     mouse: 
@@ -105,7 +103,6 @@ OfficeGraphs.dow_temperature = (container, data) =>
       tickDecimals: 0
       tickFormatter: (dow) ->
         OfficeGraphs.DAY_OF_WEEK[dow]
-    title: "Average Temperature by Day"
     mouse: 
       track: true
       relative: true

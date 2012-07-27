@@ -1,9 +1,18 @@
 
-<h1>Current Temp: <%= TempReading.last.temperature.round 2 %>F</h1>
+<h1 style="text-align:right;">Current: <%= TempReading.last.temperature.round 2 %>F</h1>
 
+
+<h3>Office Temperature - 24 hours</h3>
 <div id="editor-render-0" style="width:97%;height:400px;"></div>
-<div id="editor-render-1" style="width:65%;height:400px;"></div>
-<div id="editor-render-2" style="width:65%;height:400px;"></div>
+
+<h3>Office Temperature - week</h3>
+<div id="editor-render-3" style="width:97%;height:400px;"></div>
+
+<h3>Average Temperature by Hour</h3>
+<div id="editor-render-1" style="width:97%;height:400px;"></div>
+
+<h3>Average Temperature by Day of the Week</h3>
+<div id="editor-render-2" style="width:97%;height:400px;"></div>
 
 <table cellspacing="0" cellpadding="2" border="0">
 <tr>
@@ -15,5 +24,7 @@
 OfficeGraphs.overall_temperature($("#editor-render-0")[0],<%= @temps.to_json %>);
 OfficeGraphs.hourly_temperature($("#editor-render-1")[0],<%= @hourly.to_json %>);
 OfficeGraphs.dow_temperature($("#editor-render-2")[0],<%= @dow.to_json %>);
+
+OfficeGraphs.overall_temperature($("#editor-render-3")[0],<%= @temp_week.to_json %>);
 </script>
 

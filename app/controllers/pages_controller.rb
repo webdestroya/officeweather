@@ -8,6 +8,13 @@ class PagesController < ApplicationController
       @temps << [(temp.created_at.to_i*1000), temp.temperature]
     end
 
+    templist2 = TempReading.where(["created_at >= ?", 1.week.ago]).all
+
+    @temp_week = []
+    templist2.each do |temp|
+      @temp_week << [(temp.created_at.to_i*1000), temp.temperature]
+    end
+
     #TempReading.average(:temperature, :group => " strftime('%H',created_at)")
     hourlyavgs = TempReading.average(:temperature, :group => "EXTRACT(HOUR from created_at)")
     @hourly = []
