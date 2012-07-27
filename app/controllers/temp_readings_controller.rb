@@ -44,7 +44,8 @@ class TempReadingsController < ApplicationController
 
     respond_to do |format|
       if @temp_reading.save
-        format.html { redirect_to @temp_reading, notice: 'Temp reading was successfully created.' }
+        #format.html { redirect_to @temp_reading, notice: 'Temp reading was successfully created.' }
+        format.html { render text: "OK", status: :created }
         format.json { render json: @temp_reading, status: :created, location: @temp_reading }
       else
         format.html { render action: "new" }

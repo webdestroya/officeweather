@@ -1,5 +1,5 @@
 OfficeWeather::Application.routes.draw do
-  resources :temp_readings
+  resources :temp_readings, :only => [:create]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

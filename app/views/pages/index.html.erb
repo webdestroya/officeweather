@@ -1,9 +1,11 @@
 
 
-<div id="editor-render-0" style="width:100%;height:400px;"></div>
+<div id="editor-render-0" style="width:97%;height:400px;"></div>
 <div id="editor-render-1" style="width:65%;height:400px;"></div>
 <div id="editor-render-2" style="width:65%;height:400px;"></div>
-<script>
+
+
+<script type="text/javascript" language="javascript">
 OfficeGraphs.overall_temperature($("#editor-render-0")[0],<%= @temps.to_json %>);
 OfficeGraphs.hourly_temperature($("#editor-render-1")[0],<%= @hourly.to_json %>);
 OfficeGraphs.dow_temperature($("#editor-render-2")[0],<%= @dow.to_json %>);

@@ -2,6 +2,7 @@ OfficeGraphs = {}
 
 OfficeGraphs.DAY_OF_WEEK = ["Sun","Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
 
+# Default function to print the temp
 OfficeGraphs.default_temp_tick = (temp) ->
   "#{temp}F"
 
