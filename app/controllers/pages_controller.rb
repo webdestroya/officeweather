@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
   def index
-    templist = TempReading.where(["created_at >= ?", 1.month.ago]).all
+    templist = TempReading.where(["created_at >= ?", 24.hours.ago]).all
 
     @temps = []
     templist.each do |temp|

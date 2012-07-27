@@ -6,18 +6,26 @@ OfficeGraphs.DAY_OF_WEEK = ["Sun","Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
 OfficeGraphs.default_temp_tick = (temp) ->
   "#{temp}F"
 
-OfficeGraphs.overall_temperature = (container, data) =>
-  graph = Flotr.draw container, [data], 
+# Format the x ticks
+OfficeGraphs.overall_tick_format = (num) ->
+  moment(parseInt(num)).format("M/D<br>h:mmA")
+
+
+# Overall temperature
+OfficeGraphs.overall_temperature = (container, data) ->
+  options = 
+    selection:
+      mode: "x"
     xaxis: 
       mode: 'time'
       noTicks: 10
       minorTickFreq: 20
-      tickFormatter: (num) ->
-        moment(parseInt(num)).format("M/D h:mmA")
+      tickFormatter: OfficeGraphs.overall_tick_format
     grid:
       minorVerticalLines: true
     yaxis:
       noTicks: 10
+      tickDecimals: 1
       tickFormatter: OfficeGraphs.default_temp_tick
     HtmlText: true
     title: "Office Temperature"
@@ -28,8 +36,34 @@ OfficeGraphs.overall_temperature = (container, data) =>
       trackFormatter: (point) ->
         time = moment(parseInt(point.x))
         time.format("ddd M/D/YY, h:mm A")+": #{point.y}F"
+
+  drawGraph = (opts) ->
+    new_opts = Flotr._.extend(Flotr._.clone(options), opts || {})
+    Flotr.draw(container, [data], new_opts)
+
+  graph = drawGraph()
+
+  Flotr.EventAdapter.observe container, "flotr:select", (area) ->
+    graph = drawGraph
+      xaxis: 
+        min: area.x1
+        max: area.x2
+        mode: "time"
+        tickFormatter: OfficeGraphs.overall_tick_format
+      yaxis:
+        min: area.y1
+        max: area.y2
+    return
+
+  Flotr.EventAdapter.observe container, "flotr:click", () ->
+    graph = drawGraph()
+    return
+
   graph
 
+
+
+# Hourly Temperature
 OfficeGraphs.hourly_temperature = (container, data) =>
   Flotr.draw container, [data], 
     bars:
@@ -55,7 +89,9 @@ OfficeGraphs.hourly_temperature = (container, data) =>
           return "#{(hour-12)}PM: #{point.y}F"
         else
           return "#{hour}AM: #{point.y}F"
-        
+
+
+# Day of the week graph
 OfficeGraphs.dow_temperature = (container, data) =>
   Flotr.draw container, [data], 
     bars:
