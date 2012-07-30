@@ -2,32 +2,41 @@ class PagesController < ApplicationController
 
   def index
     templist = TempReading.where(["created_at >= ?", 24.hours.ago]).all
-
     @temps = []
     templist.each do |temp|
       @temps << [(temp.created_at.to_i*1000), temp.temperature]
     end
 
     templist2 = TempReading.where(["created_at >= ?", 1.week.ago]).all
-
     @temp_week = []
     templist2.each do |temp|
       @temp_week << [(temp.created_at.to_i*1000), temp.temperature]
     end
 
-    #TempReading.average(:temperature, :group => " strftime('%H',created_at)")
-    hourlyavgs = TempReading.average(:temperature, :group => "EXTRACT(HOUR from created_at)")
-    @hourly = []
-    hourlyavgs.each_pair do |key,val|
-      @hourly << [key.to_i, val.to_f]
-    end
+    # Hourly
+    @hourly = chart_grouper TempReading.average(:temperature, :group => "EXTRACT(HOUR from created_at)")    
+    @hourly_min = chart_grouper TempReading.minimum(:temperature, :group => "EXTRACT(HOUR from created_at)")    
+    @hourly_max = chart_grouper TempReading.maximum(:temperature, :group => "EXTRACT(HOUR from created_at)")    
 
-    dowavgs = TempReading.average(:temperature, :group => "EXTRACT(dow from created_at)")
-    @dow = []
-    dowavgs.each_pair do |key,val|
-      @dow << [key.to_i, val.to_f]
-    end
+    # Day of week
+    @dow = chart_grouper TempReading.average(:temperature, :group => "EXTRACT(DOW from created_at)")
 
+
+
+    @high = TempReading.order("temperature DESC").first
+    @low = TempReading.order("temperature ASC").first
+
+  end
+
+
+  private
+
+  def chart_grouper(search)
+    group = []
+    search.each_pair do |key,val|
+      group << [key.to_i, val.to_f]
+    end
+    group.sort {|a,b| a[0] <=> b[0]}
   end
 
 end

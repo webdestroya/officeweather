@@ -11,12 +11,20 @@
 <h3>Average Temperature by Hour</h3>
 <div id="editor-render-1" style="width:97%;height:400px;"></div>
 
+<h3>Temperature by Hour</h3>
+<div id="editor-render-4" style="width:97%;height:400px;"></div>
+
 <h3>Average Temperature by Day of the Week</h3>
 <div id="editor-render-2" style="width:97%;height:400px;"></div>
 
 <table cellspacing="0" cellpadding="2" border="0">
 <tr>
-  <td>High:</td><td>test</td>
+  <td>High:</td>
+  <td><%= @high.display_temp %> on <%= @high.created_at.strftime("%a, %m/%d/%y at %l:%M%P") %></td>
+</tr>
+<tr>
+  <td>Low:</td>
+  <td><%= @low.display_temp %> on <%= @low.created_at.strftime("%a, %m/%d/%y at %l:%M%P") %></td>
 </tr>
 </table>
 
@@ -26,6 +34,9 @@ OfficeGraphs.hourly_temperature($("#editor-render-1")[0],<%= @hourly.to_json %>)
 OfficeGraphs.dow_temperature($("#editor-render-2")[0],<%= @dow.to_json %>);
 
 OfficeGraphs.overall_temperature($("#editor-render-3")[0],<%= @temp_week.to_json %>);
+
+OfficeGraphs.hourly_line_temperature($("#editor-render-4")[0],<%= @hourly.to_json %>, <%= @hourly_min.to_json %>,<%= @hourly_max.to_json %>);
+
 </script>
 
 <!--

@@ -61,6 +61,34 @@ OfficeGraphs.overall_temperature = (container, data) ->
   graph
 
 
+# Hourly Temperature
+OfficeGraphs.hourly_line_temperature = (container, data_avg, data_min, data_max) =>
+  data = [
+    {data: data_avg, label: "Average"}
+    {data: data_min, label: "Low"}
+    {data: data_max, label: "High"}
+  ]
+  Flotr.draw container, data, 
+    xaxis: 
+      min: 0
+      max: 23
+      noTicks: 23
+      tickDecimals: 0
+    yaxis:
+      tickFormatter: OfficeGraphs.default_temp_tick
+    mouse: 
+      track: true
+      relative: true
+      sensibility: 5
+      radius: 5
+      trackFormatter: (point) ->
+        hour = parseInt(point.x)
+
+        if hour > 12
+          return "#{(hour-12)}PM: #{point.y}F (#{point.series.label})"
+        else
+          return "#{hour}AM: #{point.y}F (#{point.series.label})"
+
 
 # Hourly Temperature
 OfficeGraphs.hourly_temperature = (container, data) =>
