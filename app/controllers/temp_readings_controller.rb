@@ -42,8 +42,13 @@ class TempReadingsController < ApplicationController
   def create
     @temp_reading = TempReading.new(params[:temp_reading])
 
+    data = [
+      TempoDB::DataPoint.new( Time.now.utc, params[:temp_reading][:temperature].to_f )
+    ]
+
     respond_to do |format|
-      if @temp_reading.save
+      #if @temp_reading.save
+      if tempodb.write_key("office_temp", data)
         #format.html { redirect_to @temp_reading, notice: 'Temp reading was successfully created.' }
         format.html { render text: "OK", status: :created }
         format.json { render json: @temp_reading, status: :created, location: @temp_reading }
